@@ -4,7 +4,6 @@ import 'package:e_mart_seller/const/const.dart';
 import 'package:e_mart_seller/controllers/auth_controller.dart';
 import 'package:e_mart_seller/views/home.dart';
 import 'package:e_mart_seller/widgets/custom_button.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,33 +11,35 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller = Get.put(AuthController());
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: purpleColor,
+      backgroundColor: white,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              30.heightBox,
+              50.heightBox,
               normalText(text: welcome, size: 18),
               20.heightBox,
-              Row(
+              Column(
                 children: [
                   Image.asset(
                     icLogo,
                     height: 70,
                     width: 70,
                   ).box.rounded.border(color: white).p8.make(),
-                  14.widthBox,
+                  20.widthBox,
                   normalText(text: appname, size: 20)
                 ],
               ),
-              30.heightBox,
+              50.heightBox,
               normalText(text: loginTo, size: 18),
-              10.heightBox,
+              20.heightBox,
               Obx(() {
                 return Column(
                   children: [
@@ -47,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.mail,
-                          color: purpleColor,
+                          color: blackColor,
                         ),
                         hintText: emailHint,
                         border: InputBorder.none,
@@ -65,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                       decoration: InputDecoration(
                         prefixIcon: Icon(
                           Icons.lock,
-                          color: purpleColor,
+                          color: blackColor,
                         ),
                         hintText: passwordHint,
                         border: InputBorder.none,
@@ -77,6 +78,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    5.heightBox,
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -85,8 +87,10 @@ class LoginScreen extends StatelessWidget {
                             text: forgotPassword, color: purpleColor),
                       ),
                     ),
+                    5.heightBox,
                     SizedBox(
                       width: context.screenWidth - 100,
+                      height: 50,
                       child: customButton(
                         isLoading: controller.isLoading.value,
                         title: login,
@@ -95,7 +99,7 @@ class LoginScreen extends StatelessWidget {
                           await controller.loginMethod().then(
                             (value) {
                               if (value != null) {
-                                Fluttertoast.showToast(msg: "Logged in");
+                                Get.snackbar("Successful", "Logged in successfully");
                                 Get.offAll(() => Home());
                                 controller.isLoading(false);
                               } else {
@@ -107,7 +111,15 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ).box.rounded.p12.white.make();
+                )
+                    .box
+                    .white
+                    .rounded
+                    .margin(EdgeInsets.symmetric(horizontal: size.width * 0.3))
+                    .padding(EdgeInsets.symmetric(horizontal: 30, vertical: 30))
+                    .shadowSm
+                    .width(context.screenWidth - 50)
+                    .make();
               }),
               10.heightBox,
               Center(child: normalText(text: anyProblem, color: lightGrey)),

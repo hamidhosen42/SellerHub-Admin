@@ -5,11 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 class AuthController extends GetxController {
   var isLoading = false.obs;
 
-  //text editing controller
+  //!===========text editing controller=============
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
-  //user login
+  //!==================user login===============
   Future<UserCredential?> loginMethod() async {
     UserCredential? userCredential;
     try {
@@ -18,9 +18,11 @@ class AuthController extends GetxController {
         password: passwordController.text,
       );
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(msg: e.message.toString());
+       Get.snackbar("Error", e.message.toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+      Get.snackbar("Error", e.toString(),
+          colorText: Colors.white, backgroundColor: Colors.red);
     }
     return userCredential;
   }

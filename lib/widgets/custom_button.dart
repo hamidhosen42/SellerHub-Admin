@@ -2,8 +2,9 @@ import 'package:e_mart_seller/const/const.dart';
 
 Widget customButton(
     {required String title,
-    Color color = purpleColor,
-    required VoidCallback onPressed,isLoading}) {
+    Color color = btnColor,
+    required VoidCallback onPressed,
+    isLoading}) {
   return ElevatedButton(
     onPressed: onPressed,
     style: ElevatedButton.styleFrom(
@@ -15,6 +16,9 @@ Widget customButton(
     ),
     child: isLoading
         ? "Loading..".text.white.bold.make()
-        : normalText(text: title, size: 16),
+        : normalText(
+            text: title,
+            size: 16,
+          ),
   );
 }
